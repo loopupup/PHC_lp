@@ -1,0 +1,96 @@
+humanoid_type: ehr03
+bias_offset: False
+has_self_collision: False
+has_mesh: False
+has_jt_limit: False
+has_dof_subset: True
+has_upright_start: True
+has_smpl_pd_offset: False
+remove_toe: False # For humanoid's geom toe
+motion_sym_loss: False
+sym_loss_coef: 1
+big_ankle: True
+
+has_shape_obs: false
+has_shape_obs_disc: false
+has_shape_variation: False
+
+masterfoot: False
+freeze_toe: false
+freeze_hand: False
+box_body: True
+real_weight: True
+real_weight_porpotion_capsules: True
+real_weight_porpotion_boxes: True
+
+# body_names: ['pelvis', 'left_hip_pitch_link', 'left_hip_roll_link', 'left_hip_yaw_link', 'left_knee_link', 'left_ankle_pitch_link', 'left_ankle_roll_link', 'right_hip_pitch_link', 'right_hip_roll_link', 'right_hip_yaw_link', 'right_knee_link', 'right_ankle_pitch_link', 'right_ankle_roll_link', 'torso_link', 'left_shoulder_pitch_link', 'left_shoulder_roll_link', 'left_shoulder_yaw_link', 'left_elbow_pitch_link', 'left_elbow_roll_link', 'left_zero_link', 'left_one_link', 'left_two_link', 'left_three_link', 'left_four_link', 'left_five_link', 'left_six_link', 'right_shoulder_pitch_link', 'right_shoulder_roll_link', 'right_shoulder_yaw_link', 'right_elbow_pitch_link', 'right_elbow_roll_link', 'right_zero_link', 'right_one_link', 'right_two_link', 'right_three_link', 'right_four_link', 'right_five_link', 'right_six_link']
+body_names: ['base_link',
+    'l_leg_l1','l_leg_l2','l_leg_l3','l_leg_l4','l_leg_l5','l_leg_l6',
+    'r_leg_l1','r_leg_l2','r_leg_l3','r_leg_l4','r_leg_l5','r_leg_l6',
+    'torso_l1','torso_l2','torso_l3',
+    'l_arm_l1','l_arm_l2','l_arm_l3','l_arm_l4','l_arm_l5','l_arm_l6',"l_hand",
+    'r_arm_l1','r_arm_l2','r_arm_l3','r_arm_l4','r_arm_l5','r_arm_l6', "r_hand"
+  ]    
+      
+limb_weight_group: 
+  - ['l_leg_l1','l_leg_l2','l_leg_l3','l_leg_l4','l_leg_l5','l_leg_l6']
+  - ['r_leg_l1','r_leg_l2','r_leg_l3','r_leg_l4','r_leg_l5','r_leg_l6']
+  - ['base_link','torso_l1','torso_l2','torso_l3']
+  - ['l_arm_l1','l_arm_l2','l_arm_l3','l_arm_l4','l_arm_l5','l_arm_l6',"l_hand"]
+  - ['r_arm_l1','r_arm_l2','r_arm_l3','r_arm_l4','r_arm_l5','r_arm_l6',"r_hand"]
+dof_names: ['l_leg_1','l_leg_2','l_leg_3','l_leg_4','l_leg_5','l_leg_6',
+              'r_leg_1','r_leg_2','r_leg_3','r_leg_4','r_leg_5','r_leg_6',
+              'torso_1','torso_2','torso_3',
+              'l_arm_1','l_arm_2','l_arm_3','l_arm_4','l_arm_5','l_arm_6',
+              'r_arm_1','r_arm_2','r_arm_3','r_arm_4','r_arm_5','r_arm_6']
+right_foot_name: 'r_leg_l6'
+left_foot_name: 'l_leg_l6'
+
+asset:
+  assetRoot: "./"
+  assetFileName: "phc/data/assets/robot/ehr03/urdf/ehr03_lp.xml"
+  urdfFileName: "phc/data/assets/robot/ehr03/urdf/ehr03_lp.xml"
+
+
+extend_config:
+  - joint_name: "head_link"
+    parent_name: "base_link"
+    pos: [0.0, 0.0, 0.55]
+    rot: [1.0, 0.0, 0.0, 0.0]
+
+  - joint_name: "left_toe_link"
+    parent_name: "l_leg_l6"
+    pos: [0.09, 0.0, 0.0]
+    rot: [1.0, 0.0, 0.0, 0.0]
+
+  - joint_name: "right_toe_link"
+    parent_name: "r_leg_l6"
+    pos: [0.09, 0.0, 0.0]
+    rot: [1.0, 0.0, 0.0, 0.0]
+
+base_link: "base_link"
+joint_matches:
+  - ["base_link", "Pelvis"]
+  - ["l_leg_l1", "L_Hip"]
+  - ["l_leg_l4", "L_Knee"]
+  - ["l_leg_l6", "L_Ankle"]
+  - ["r_leg_l1", "R_Hip"]
+  - ["r_leg_l4", "R_Knee"]
+  - ["r_leg_l6", "R_Ankle"]
+  - ["l_arm_l2", "L_Shoulder"]
+  - ["l_arm_l4", "L_Elbow"]
+  - ["l_arm_l6", "L_Hand"]
+  - ["r_arm_l2", "R_Shoulder"]
+  - ["r_arm_l4", "R_Elbow"]
+  - ["r_arm_l6", "R_Hand"]
+  - ["head_link", "Head"]
+  - ["left_toe_link", "L_Toe"]
+  - ["right_toe_link", "R_Toe"]
+
+
+smpl_pose_modifier:
+  - Pelvis: "[np.pi/2, 0, np.pi/2]"
+  - L_Shoulder: "[0, 0, -np.pi/2]"
+  - R_Shoulder: "[0, 0, np.pi/2]"
+  - L_Elbow: "[0, -np.pi/2, 0]"
+  - R_Elbow: "[0, np.pi/2, 0]"

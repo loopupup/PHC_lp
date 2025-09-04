@@ -56,7 +56,10 @@ def process_motion(key_names, key_name_to_pkls, cfg):
     device = torch.device("cpu")
     
     humanoid_fk = Humanoid_Batch(cfg.robot) # load forward kinematics model
-    num_augment_joint = len(cfg.robot.extend_config)
+    if cfg.robot.get("extend_config", None) is not None:
+        num_augment_joint = len(cfg.robot.extend_config)
+    else:
+        num_augment_joint = 0
 
     #### Define corresonpdances between h1 and smpl joints
     robot_joint_names_augment = humanoid_fk.body_names_augment 
@@ -207,7 +210,8 @@ def main(cfg : DictConfig) -> None:
     torch.set_num_threads(1)
     mp.set_sharing_strategy('file_descriptor')
     jobs = key_names
-    num_jobs = 30
+    # num_jobs = 30
+    num_jobs = 1
     chunk = np.ceil(len(jobs)/num_jobs).astype(int)
     jobs= [jobs[i:i + chunk] for i in range(0, len(jobs), chunk)]
     job_args = [(jobs[i], key_name_to_pkls, cfg) for i in range(len(jobs))]
